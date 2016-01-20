@@ -11,6 +11,7 @@ import Foundation
 class ToDo: NSObject {
     var content: String
     var completed: Bool
+    var notes: String?
     
     init(withContent content: String) {
         self.content = content
