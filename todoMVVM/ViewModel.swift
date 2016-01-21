@@ -29,6 +29,17 @@ class ToDoViewModel: NSObject {
         self.appendToDataSource(self.demo2)
     }
     
+    
+    /**
+     Counts available items in DataSource
+     
+     - returns: Numbers of item available in DataSource
+     */
+    func countAvailableTodos() -> Int {
+        return self.todoDataSource.count
+    }
+    
+    
     /**
      Create new todos
      
@@ -39,6 +50,7 @@ class ToDoViewModel: NSObject {
         self.appendToDataSource(newTodo)
     }
     
+    
     /**
      Handle current completion status of todos
      
@@ -48,6 +60,7 @@ class ToDoViewModel: NSObject {
         todo.completed = true
         self.appedToCompleted(todo)
     }
+    
     
     /**
      Removes the Todo item from the completed array
@@ -89,6 +102,10 @@ class ToDoViewModel: NSObject {
 }
 
 extension ToDoViewModel {
+    
+    func todoAtIndex(index: Int) -> ToDo? {
+        return self.todoDataSource[index]
+    }
     
     private func appedToCompleted(todo: ToDo) {
         self.todoCompleted.append(todo)

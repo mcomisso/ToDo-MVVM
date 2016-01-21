@@ -25,23 +25,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Todo List"
-        
         // Let's add some UI
         self.tableView = UITableView(frame: self.view.bounds)
         self.statusLabel = UILabel(frame: self.view.bounds)
         self.configureViewComponents()
+
+        self.title = "Todo List"
+    }
+
+    override func updateViewConstraints() {
+
+        
+
+        super.updateViewConstraints()
     }
     
-    
     func configureViewComponents() {
-        guard let unwrappedTableView = self.tableView else {
-            return
-        }
-        
-        guard let unwrappedStatusLabel = self.statusLabel else {
-            return
-        }
+        guard let unwrappedTableView = self.tableView else { return }
+        guard let unwrappedStatusLabel = self.statusLabel else { return }
         
         unwrappedStatusLabel.text = "No more todos 🎉"
         unwrappedStatusLabel.textAlignment = .Center
@@ -93,13 +94,12 @@ extension ViewController: UITableViewDelegate {
 extension ViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if (self.viewModel.todoDataSource.isEmpty) {
             tableView.hidden = true
         } else {
             tableView.hidden = false
         }
-        return self.viewModel.todoDataSource.count
+        return self.viewModel.countAvailableTodos()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -107,7 +107,6 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        
         let quickEditAction = UITableViewRowAction(style: .Normal, title: "Edit") { (tableViewRowAction: UITableViewRowAction, indexPath: NSIndexPath) -> Void in
             //            let todoItem = self.viewModel.todoDataSource[indexPath.row]
         }
@@ -123,11 +122,12 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier, forIndexPath: indexPath)
-        
-        let todo = self.viewModel.todoDataSource[indexPath.row] as ToDo
-        cell.textLabel?.text = todo.content
-        cell.accessoryType = self.viewModel.isCompleted(todo) ? .Checkmark : .None
-        cell.textLabel?.textColor = self.viewModel.isCompleted(todo) ? UIColor(white: 0, alpha: 0.4) : UIColor.blackColor()
+        let todo = self.viewModel.todoAtIndex(indexPath.row)
+        guard let unwrappedTodo = todo else { return cell }
+
+        cell.textLabel?.text = unwrappedTodo.content
+        cell.accessoryType = self.viewModel.isCompleted(unwrappedTodo) ? .Checkmark : .None
+        cell.textLabel?.textColor = self.viewModel.isCompleted(unwrappedTodo) ? UIColor(white: 0, alpha: 0.4) : UIColor.blackColor()
         
         return cell
     }
@@ -141,7 +141,6 @@ extension ViewController {
     }
     
     func addOrEditTodo(todo: ToDo?) {
-        
         var alertController: UIAlertController
         
         alertController = UIAlertController(title: "Add", message: "Add your todo", preferredStyle: .Alert)
