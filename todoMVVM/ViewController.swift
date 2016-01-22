@@ -87,9 +87,9 @@ extension ViewController: UITableViewDelegate {
 //
 //  UITableViewDataSource discussion
 //
-//  There are two main ideas: UITableViewDataSource can be read primarly as "DataSource" or "UITableView".
+//  There are two main ideas: UITableViewDataSource can be read primarily as "DataSource" or "UITableView".
 //  Since tableView:cellForRowAtIndexPath: returns a UITableViewCell, the delegate should be the view itself.
-//  General rule: /^UI[a-z]*$/ should be treated as view components.
+//  General rule: /^UI[a-z]*$/ should be treated as "view" components.
 //
 extension ViewController: UITableViewDataSource {
     
