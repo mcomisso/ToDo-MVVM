@@ -13,12 +13,30 @@ class DetailsViewController: UIViewController {
     
     var todoNotes: UITextView?
     var todoTitle: UITextField?
+    var doneAndDeleteButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.todoTitle = UITextField(frame: CGRectZero)
         self.todoNotes = UITextView(frame: CGRectZero)
+        self.doneAndDeleteButton = UIButton(frame: CGRectZero)
+        
+        // Add action to edit current content
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editContentOfTodo")
+    }
+    
+    func editContentOfTodo() {
+        self.todoNotes?.editable = true
+        self.todoNotes?.selectable = true
+        self.todoTitle?.enabled = true
+        
+        // Make a button appear
+        
+        
+    }
+    
+    func toggleDoneDeleteButton () {
         
     }
 }
