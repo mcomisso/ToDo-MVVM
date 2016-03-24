@@ -55,8 +55,8 @@ class ViewController: UIViewController {
         self.view.addSubview(unwrappedStatusLabel)
         self.view.addSubview(unwrappedTableView)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addOrEditTodo:")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "clearCompleted")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ViewController.addOrEditTodo(_:)))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(ViewController.clearCompleted))
 
         unwrappedTableView.reloadData()
     }
